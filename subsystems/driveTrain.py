@@ -37,10 +37,6 @@ class DriveTrainSubsystem(commands2.Subsystem):
         self.rearLeft = SwerveModule(RobotConfig.rearLeft)
         self.rearRight = SwerveModule(RobotConfig.rearRight)
 
-        teleopConstants = RobotConfig.DriveConstants.PoseConstants
-
-
-        self.poseTolerance = geometry.Pose2d(geometry.Translation2d(x=teleopConstants.xPoseToleranceMeters, y=teleopConstants.yPoseToleranceMeters), geometry.Rotation2d(teleopConstants.thetaPoseToleranceRadians))
         self.alliance = wpilib.DriverStation.getAlliance()
 
         self.KINEMATICS = kinematics.SwerveDrive4Kinematics(geometry.Translation2d(float(self.trackWidth / 2), float(self.wheelBase / 2)), geometry.Translation2d(float(self.trackWidth / 2), float(-self.wheelBase / 2)), geometry.Translation2d(float(-self.trackWidth / 2), float(self.wheelBase / 2)), geometry.Translation2d(float(-self.trackWidth / 2), float(-self.wheelBase / 2)))
