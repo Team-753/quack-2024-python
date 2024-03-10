@@ -40,12 +40,6 @@ class rearLeft(SwerveModuleConfig):
     absoluteID = 3
     absoluteOffset = 24.1
 
-class Arm:
-    leftMotorCanID = 9
-    rightMotorCanID = 10
-    limitSwitch1RIO = 0
-    limitSwitch2RIO = 1
-
 class DriveConstants:
     class Joystick:
         USB_ID = 0
@@ -53,28 +47,9 @@ class DriveConstants:
         yDeadband = 0.1
         thetaDeadband = 0.15
     class RobotSpeeds:
-        maxSpeed = 4.8
+        maxSpeed = 4
         maxAcceleration = 4
-        manualRotationSpeedFactor = 1
-        
-    class PoseConstants:
-        class translationPIDConstants:
-            kP = 5.0
-            kI = 0.0
-            kD = 0.0
-            period = 0.025
-            
-        class rotationPIDConstants:
-            kP = 1.0
-            kI = 0.0
-            kD = 0.0
-            period = 0.025
-            
-        xPoseToleranceMeters = 0.05
-        yPoseToleranceMeters = 0.05
-        thetaPoseToleranceRadians = 0.01745
-        teleopVelLimit = 4.25
-        teleopAccelLimit = 3
+        manualRotationSpeedFactor = 0.5
 
 class FieldConstants:
     fieldWidthMeters = 16.54
