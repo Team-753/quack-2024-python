@@ -75,3 +75,10 @@ class DriveConstants:
         thetaPoseToleranceRadians = 0.01745
         teleopVelLimit = 4.25
         teleopAccelLimit = 3
+
+class FieldConstants:
+    fieldWidthMeters = 16.54
+    fieldLengthMeters = 8.21
+    speakerYMeters = 5.548
+    speakerZMeters = 2.05
+    speakerXMeters = 0.225

@@ -23,6 +23,9 @@ class DriveTrainSubsystem(commands2.Subsystem):
         self.LimelightTable = NetworkTables.getTable('limelight')''' # giving us access to the limelight's data as a variable
 
         self.navx = navx.AHRS.create_spi(update_rate_hz=100)
+        
+        self.field = wpilib.Field2d()
+        wpilib.SmartDashboard.putData("Field", self.field)
 
         self.kMaxSpeed = RobotConfig.DriveConstants.RobotSpeeds.maxSpeed
         self.kMaxAngularVelocity = RobotConfig.DriveConstants.RobotSpeeds.maxSpeed / math.hypot(RobotConfig.RobotDimensions.trackWidth / 2, RobotConfig.RobotDimensions.wheelBase / 2)
@@ -134,6 +137,14 @@ class DriveTrainSubsystem(commands2.Subsystem):
                 botPose2D = geometry.Pose2d(geometry.Translation2d(botPoseData[0], botPoseData[1]), geometry.Rotation2d(botPoseData[5]))
                 latency = botPoseData[6]
                 self.poseEstimator.addVisionMeasurement(botPose2D, latency)'''
-        self.poseEstimator.update(
+        currentPose = self.poseEstimator.update(
             self.getNAVXRotation2d(),
             self.getSwerveModulePositions())
+        if self.alliance == wpilib.DriverStation.Alliance.kRed:
+            self.field.setRobotPose(currentPose)
+        else: 
+            # we MAY need to also do the field height minus the current y-component of the pose, I am not totally sure at the moment
+            self.field.setRobotPose(RobotConfig.FieldConstants.fieldLengthMeters - currentPose.x, currentPose.y, currentPose.rotation().rotateBy(geometry.Rotation2d(math.pi)))
+    
+    def setAlliance(self, allianceColor: wpilib.DriverStation.Alliance):
+        self.alliance = allianceColor
