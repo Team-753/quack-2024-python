@@ -44,7 +44,7 @@ class SwerveModule:
         return self.analogEncoder.getAbsolutePosition() * 360
     
     def getPosition(self) -> kinematics.SwerveModulePosition:
-        return kinematics.SwerveModulePosition(self.driveMotor.get_position(),
+        return kinematics.SwerveModulePosition(self.driveMotor.get_position().value_as_double * RobotConfig.RobotDimensions.wheeDiameter * pi / RobotConfig.SwerveModuleConfig.drivingGearRatio,
                                                geometry.Rotation2d(2 * pi * self.turnMotor.get_position().value_as_double / RobotConfig.SwerveModuleConfig.turningGearRatio))
     
     def getState(self) -> kinematics.SwerveModuleState:
@@ -55,7 +55,7 @@ class SwerveModule:
         optimizedDesiredState = kinematics.SwerveModuleState.optimize(desiredState, 
                                                                       geometry.Rotation2d(2 * pi * self.turnMotor.get_position().value_as_double / RobotConfig.SwerveModuleConfig.turningGearRatio))
         self.driveMotor.set_control(self.m_request_velocity.with_velocity(optimizedDesiredState.speed * RobotConfig.SwerveModuleConfig.drivingGearRatio / (RobotConfig.RobotDimensions.wheeDiameter * pi)))
-        self.turnMotor.set_control(self.m_request_position(optimizedDesiredState.angle.radians() * RobotConfig.SwerveModuleConfig.turningGearRatio / (2 * pi)))
+        self.turnMotor.set_control(self.m_request_position.with_position(optimizedDesiredState.angle.radians() * RobotConfig.SwerveModuleConfig.turningGearRatio / (2 * pi)))
         
     def Brake(self):
         self.driveMotor.set_control(self.m_brake)

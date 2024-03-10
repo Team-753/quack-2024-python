@@ -35,10 +35,7 @@ class DriveTrainSubsystem(commands2.Subsystem):
         self.rearRight = SwerveModule(RobotConfig.rearRight)
 
         teleopConstants = RobotConfig.DriveConstants.PoseConstants
-        
-        rotationConstants = RobotConfig.DriveConstants.thetaPIDConstants.translationPIDConstants
-        self.rotationPID = controller.PIDController(rotationConstants.kP, rotationConstants.kI, rotationConstants.kD, rotationConstants.period)
-        self.rotationPID.enableContinuousInput(-math.pi, math.pi)
+
 
         self.poseTolerance = geometry.Pose2d(geometry.Translation2d(x=teleopConstants.xPoseToleranceMeters, y=teleopConstants.yPoseToleranceMeters), geometry.Rotation2d(teleopConstants.thetaPoseToleranceRadians))
         self.alliance = wpilib.DriverStation.getAlliance()
@@ -114,7 +111,7 @@ class DriveTrainSubsystem(commands2.Subsystem):
         self.rearLeft.Coast()
         self.rearRight.Coast()
 
-    def getSwerveModulePositions(self) -> tuple(kinematics.SwerveModulePosition):
+    def getSwerveModulePositions(self) -> tuple[kinematics.SwerveModulePosition]:
         return self.frontLeft.getPosition(), self.frontRight.getPosition(), self.rearLeft.getPosition(), self.rearRight.getPosition()
     
     def getRobotRelativeChassisSpeeds(self) -> kinematics.ChassisSpeeds:

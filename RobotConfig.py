@@ -11,43 +11,34 @@ class AutonomousConfig:
 class SwerveModuleConfig:
     turningGearRatio = 12.8
     drivingGearRatio = 8.14
-    def __init__(self) -> None:
-        self.driveMotorID = 0
-        self.turnMotorID = 0
-        self.absoluteID = 0
-        self.absoluteOffset = 0
+    driveMotorID = 0
+    turnMotorID = 0
+    absoluteID = 0
+    absoluteOffset = 0
 
 class frontLeft(SwerveModuleConfig):
-    def __init__(self) -> None:
-        super().__init__()
-        self.driveMotorID = 1
-        self.turnMotorID = 2
-        self.absoluteID = 0
-        self.absoluteOffset = 77.05
+    driveMotorID = 1
+    turnMotorID = 2
+    absoluteID = 0
+    absoluteOffset = 77.05
 
 class frontRight(SwerveModuleConfig):
-    def __init__(self) -> None:
-        super().__init__()
-        self.driveMotorID = 3
-        self.turnMotorID = 4
-        self.absoluteID = 1
-        self.absoluteOffset = 309.7
+    driveMotorID = 3
+    turnMotorID = 4
+    absoluteID = 1
+    absoluteOffset = 309.7
     
 class rearRight(SwerveModuleConfig):
-    def __init__(self) -> None:
-        super().__init__()
-        self.driveMotorID = 5
-        self.turnMotorID = 6
-        self.absoluteID = 2
-        self.absoluteOffset = 227
+    driveMotorID = 5
+    turnMotorID = 6
+    absoluteID = 2
+    absoluteOffset = 227
     
 class rearLeft(SwerveModuleConfig):
-    def __init__(self) -> None:
-        super().__init__()
-        self.driveMotorID = 7
-        self.turnMotorID = 8
-        self.absoluteID = 3
-        self.absoluteOffset = 24.1
+    driveMotorID = 7
+    turnMotorID = 8
+    absoluteID = 3
+    absoluteOffset = 24.1
 
 class Arm:
     leftMotorCanID = 9
