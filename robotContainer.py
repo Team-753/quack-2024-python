@@ -1,26 +1,25 @@
-from subsystems.driveTrain import DriveTrainSubsystem
-from commands2 import button
-from commands.defaultDriveCommand import DefaultDriveCommand
-import os
-import wpilib
-from wpilib import SmartDashboard, SendableChooser
 import RobotConfig
+import commands2
+import math
+import wpilib
 import pathplannerlib
-from pathplannerlib import auto
-from pathplannerlib.auto import PathPlannerAuto
+import os
+from pathplannerlib.path import PathPlannerPath
+from pathplannerlib.auto import AutoBuilder
 
+from wpimath import geometry, kinematics, estimator
+from commands2 import button, cmd
+from subsystems.driveTrain import DriveTrainSubsystem
+from commands.defaultDriveCommand import DefaultDriveCommand
+#from commands.ArmCommands import grabberEvents
+
+from wpilib.cameraserver import CameraServer
+#from commands.ArmCommands import empty
+#from commands.ArmCommands import armEvents
+from commands.HardAuto import simpleAutoDrive, ModificationDrive
 
 
 class RobotContainer:
-
-    #--------------------------------------------------------------------------------
-    #Autonomous Auto Select
-    folderPath = os.path.dirname(os.path.abspath(__file__))
-    tempAutoList = os.listdir(os.path.join(folderPath, 'deploy/pathplanner/autos'))
-    autoList = []
-    for pathName in tempAutoList:
-            autoList.append(pathName.removesuffix(".auto"))
-    #--------------------------------------------------------------------------------
     
     def __init__(self) -> None:
         
@@ -29,34 +28,22 @@ class RobotContainer:
         self.driveTrain = DriveTrainSubsystem(self.joystick)
         
         self.driveTrain.setDefaultCommand(DefaultDriveCommand(self.driveTrain))
-
+        
     #--------------------------------------------------------------------------------
     #Configure Auto Settings
         self.autonomousChooser = wpilib.SendableChooser()
         self.autonomousChooser.setDefaultOption("OnlyForward", "OnlyForward")
-        #self.autonomousChooser.addOption("Only Taxi", "Only Taxi")
+        self.autonomousChooser.addOption("Experimental", "Experimental")
         for pathName in self.autoList:
             self.autonomousChooser.addOption(pathName, pathName)
         wpilib.SmartDashboard.putData("Autonomous Chooser", self.autonomousChooser)
-    #--------------------------------------------------------------------------------    
-
-    #-----------------------------------------------------------------------------------------------   
-    #Autonomous Start Protocol
-    def getAutonomousCommand(self):
-        
-        """ Logic for what will run in autonomous mode. Returning anything but a command will result in nothing happening in autonomous. """
-        pathName = self.autonomousChooser.getSelected()
-        if pathName == "OnlyForward": 
-            #return commands2.SequentialCommandGroup(ArmConfirmUp, AutoShootSpeaker)
-            #return commands2.SequentialCommandGroup(commands2.WaitCommand(12), simpleAutoDrive(self.driveTrain))
-            pass
-        else:
-            return PathPlannerAuto(pathName)
-            
-    #-----------------------------------------------------------------------------------------------   
+    #--------------------------------------------------------------------------------  
     
     def autonomousInit(self):
         pass
     
     def getAutonomousCommand(self):
-        pass
+        #return commands2.SequentialCommandGroup(commands2.WaitCommand(12), simpleAutoDrive(self.driveTrain))
+        path = PathPlannerPath.fromPathFile('Example Path')
+        return AutoBuilder.followPath(path)
+        
