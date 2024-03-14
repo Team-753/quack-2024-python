@@ -136,11 +136,7 @@ class DriveTrainSubsystem(commands2.Subsystem):
         currentPose = self.poseEstimator.update(
             self.getNAVXRotation2d(),
             self.getSwerveModulePositions())
-        if self.alliance == wpilib.DriverStation.Alliance.kRed:
-            self.field.setRobotPose(currentPose)
-        else: 
-            # we MAY need to also do the field height minus the current y-component of the pose, I am not totally sure at the moment
-            self.field.setRobotPose(RobotConfig.FieldConstants.fieldLengthMeters - currentPose.x, currentPose.y, currentPose.rotation().rotateBy(geometry.Rotation2d(math.pi)))
+        self.field.setRobotPose(currentPose)
     
     def setAlliance(self, allianceColor: wpilib.DriverStation.Alliance):
         self.alliance = allianceColor
