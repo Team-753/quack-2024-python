@@ -8,6 +8,10 @@ import RobotConfig
 import pathplannerlib
 from pathplannerlib import auto
 from pathplannerlib.auto import PathPlannerAuto
+import commands 
+from commands import HardAuto 
+from commands.HardAuto import ModificationDrive, simpleAutoDrive
+
 
 
 
@@ -48,7 +52,7 @@ class RobotContainer:
         pathName = self.autonomousChooser.getSelected()
         if pathName == "OnlyForward": 
             #return commands2.SequentialCommandGroup(ArmConfirmUp, AutoShootSpeaker)
-            #return commands2.SequentialCommandGroup(commands2.WaitCommand(12), simpleAutoDrive(self.driveTrain))
+            return ModificationDrive(self.driveTrain, .5, 0, 0, 2)
             pass
         else:
             return PathPlannerAuto(pathName)
